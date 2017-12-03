@@ -57,5 +57,30 @@ fn str_to_digit(s: &str) -> u32 {
 
 
 fn part2() -> Result<u32, io::Error> {
-    panic!("not implemented");
+    let stdin = io::stdin();
+    let stdin_lock = stdin.lock();
+    let checksum = stdin_lock.lines()
+        .filter_map(Result::ok)
+        .map(|line| {
+            let vec_of_strings = line.split_whitespace();
+            let vec: Vec<u32> = vec_of_strings.map(str_to_digit).collect();
+            get_row_checksum_2(vec)
+        })
+        .sum();
+    Ok(checksum)
+}
+
+fn get_row_checksum_2(row: Vec<u32>) -> u32 {
+    for (i, &a) in row.iter().enumerate() {
+        for (j, &b) in row.iter().enumerate() {
+            if i != j {
+                if a >= b && a % b == 0 {
+                    return a / b;
+                } else if b > a && b % a == 0 {
+                    return b / a;
+                }
+            }
+        }
+    }
+    0
 }
