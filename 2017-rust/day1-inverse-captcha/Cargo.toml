@@ -1,0 +1,9 @@
+[package]
+name = "day1-inverse-captcha"
+version = "0.1.0"
+
+[dependencies]
+
+[[bin]]
+name = "day1-inverse-captcha"
+path = "main.rs"
