@@ -1,0 +1,9 @@
+[package]
+name = "day2-corruption-checksum"
+version = "0.1.0"
+
+[dependencies]
+
+[[bin]]
+name = "day2-corruption-checksum"
+path = "main.rs"
