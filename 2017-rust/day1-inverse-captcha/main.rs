@@ -13,6 +13,13 @@ fn main() {
                 Err(e) => panic!(e),
             }
         },
+        "2" => {
+            let result = part2();
+            match result {
+                Ok(val) => println!("{}", val),
+                Err(e) => panic!(e),
+            }
+        },
         _ => {
             println!("found part: {}", part);
             panic!("unrecognized part");
@@ -55,6 +62,37 @@ fn part1() -> Result<u32, io::Error> {
     // final digit
     if prev_digit == first_digit.unwrap().unwrap() {
         sum = sum + prev_digit;
+    }
+
+    Ok(sum)
+}
+
+fn part2() -> Result<u32, io::Error> {
+    let stdin = io::stdin();
+
+    let mut handle = stdin.lock();
+
+    let mut buffer = String::new();
+    handle.read_to_string(&mut buffer)?;
+
+    let mut sum: u32 = 0;
+
+    let mut digits: Vec<u32> = Vec::new();
+
+    // populpate digits
+    let incoming = buffer.chars().map(|d| d.to_digit(10)).filter_map(|d| d);
+    for digit in incoming {
+        digits.push(digit);
+    }
+
+    // create sum
+    for (i, &digit) in digits.iter().enumerate() {
+        let len = digits.len();
+        let comp_i = (i + len / 2) % len;
+        let comparison_digit: u32 = digits[comp_i];
+        if digit == comparison_digit {
+            sum = sum + digit;
+        }
     }
 
     Ok(sum)
